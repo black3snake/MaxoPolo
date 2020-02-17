@@ -2,6 +2,8 @@ package com.javarush.task.task18.task1810;
 
 /* 
 DownloadException
+моя вариация решения Валя её не приняла! Хотя результат соответствует заданию.
+
 */
 
 import java.io.*;
