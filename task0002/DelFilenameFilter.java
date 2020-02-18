@@ -4,7 +4,7 @@ import java.io.FilenameFilter;
  
 public class DelFilenameFilter implements FilenameFilter {
  
-    // Принимает пути (path) с началоm '00_' возврат к первоначальному значению файлов.
+    // РџСЂРёРЅРёРјР°РµС‚ РїСѓС‚СЊ (path) СЃРЅР°С‡Р°Р»РѕРј "0+_" РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ СЂРµРіРµРєСЃ
     @Override
     public boolean accept(File dir, String name) {
  

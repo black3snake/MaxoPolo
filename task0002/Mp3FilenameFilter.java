@@ -4,7 +4,7 @@ import java.io.FilenameFilter;
  
 public class Mp3FilenameFilter implements FilenameFilter {
  
-    // Принимает пути (path) с окончаниями '.mp3'
+    // РџСЂРёРЅРёРјР°РµС‚ РїСѓС‚Рё (path) СЃ РѕРєРѕРЅС‡Р°РЅРёСЏРјРё '.mp3'
     @Override
     public boolean accept(File dir, String name) {
  

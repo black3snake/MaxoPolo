@@ -4,7 +4,7 @@ import java.io.FilenameFilter;
  
 public class TxtFilenameFilter implements FilenameFilter {
  
-    // Принимает пути (path) с окончаниями '.txt'
+    // РџСЂРёРЅРёРјР°РµС‚ РїСѓС‚Рё (path) СЃ РѕРєРѕРЅС‡Р°РЅРёСЏРјРё '.txt'
     @Override
     public boolean accept(File dir, String name) {
  
