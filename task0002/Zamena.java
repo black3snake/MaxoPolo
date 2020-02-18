@@ -1,95 +1,95 @@
+package com.javarush.task.task02;
+
 import java.io.*;
 import java.nio.file.*;
 /*
-œÓ„‡ÏÏ‡ Ì‡ÔËÒ‡Ì‡ ‰Îˇ ÌÛÏÂ‡ˆËË Ù‡ÈÎÓ‚ ‰Îˇ Á‡ÔËÒË Ì‡ ÙÎ‡¯ÍÛ ‚ mp3 ÔÓË„Ó‚‡ÚÂÎ¸
-Ú‡ÍÊÂ ÂÒÚ¸ ÏÂı‡ÌËÁÏ ‚ÓÁ‚‡Ú‡
-ÙÓÏ‡Ú txt ·˚Î ‚‚Â‰ÂÌ ÔÓÒÚÓ ‰Îˇ ÓÚÎ‡‰ÍË.
+–ü—Ä–æ–≥—Ä–∞–º–º–∞ –Ω–∞–ø–∏—Å–∞–Ω–∞ –¥–ª—è –Ω—É–º–µ—Ä–∞—Ü–∏–∏ —Ñ–∞–π–ª–æ–≤ –¥–ª—è –∑–∞–ø–∏—Å–∏ –Ω–∞ —Ñ–ª–∞—à–∫—É –≤ mp3 –ø—Ä–æ–∏–≥—Ä–æ–≤–∞—Ç–µ–ª—å
+—Ç–∞–∫–∂–µ –µ—Å—Ç—å –º–µ—Ö–∞–Ω–∏–∑–º –≤–æ–∑–≤—Ä–∞—Ç–∞
+—Ñ–æ—Ä–º–∞—Ç txt –±—ã–ª –≤–≤–µ–¥–µ–Ω –ø—Ä–æ—Å—Ç–æ –¥–ª—è –æ—Ç–ª–∞–¥–∫–∏..
 */
 public class Zamena {
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("¬Â‰ËÚÂ ÔÛÚ¸ „‰Â ÎÂÊ‡Ú ‚‡¯Ë Ù‡ÈÎ˚");
-		String fileDir = reader.readLine();
-		reader.close();
-		
-		if(Files.exists(Paths.get(fileDir))) {
-			System.out.println("ƒËÂÍÚÓËˇ Ú‡Í‡ˇ ÂÒÚ¸ " + fileDir);
-			if(args.length > 0) {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("–í–µ–¥–∏—Ç–µ –ø—É—Ç—å –≥–¥–µ –ª–µ–∂–∞—Ç –≤–∞—à–∏ —Ñ–∞–π–ª—ã");
+        String fileDir = reader.readLine();
+        reader.close();
 
-			switch(args[0]) {
-			
-			case "txt":
-			File dir = new File(fileDir);
-			File[] txtFiles = dir.listFiles(new TxtFilenameFilter());
-			int i = 0;
-			for(File txtFile : txtFiles) {
-				System.out.println(txtFile.getAbsolutePath());
-				
-				StringBuilder sb = new StringBuilder();
-				sb.append(Paths.get(txtFile.getAbsolutePath()).getParent());
-				sb.append("\\0");
-				sb.append(i++);
-				sb.append("_");
-				sb.append(Paths.get(txtFile.getAbsolutePath()).getFileName());
-				
-				File destFile = new File(sb.toString()); 
-				
-				txtFile.renameTo(destFile);
-				sb.delete(0, sb.length());
-			}
-			break;
-			
-			case "mp3":
-			File dir2 = new File(fileDir);
-			File[] mp3Files = dir2.listFiles(new Mp3FilenameFilter());
-			int i2 =0;
-			for(File mp3File : mp3Files) {
-				System.out.println(mp3File.getAbsolutePath());
-				StringBuilder sb = new StringBuilder();
-				sb.append(Paths.get(mp3File.getAbsolutePath()).getParent());
-				sb.append("\\0");
-				sb.append(i2++);
-				sb.append("_");
-				sb.append(Paths.get(mp3File.getAbsolutePath()).getFileName());
-				
-				File destFile = new File(sb.toString()); 
-				
-				mp3File.renameTo(destFile);
-				sb.delete(0, sb.length());
-				
-			}
-			break;
-			case "del":
-				File dir3 = new File(fileDir);
-				File[] DelFiles = dir3.listFiles(new DelFilenameFilter());
-				for(File DelFile : DelFiles) {
-					System.out.println(DelFile.getAbsolutePath());
-				
-					StringBuilder sb = new StringBuilder();
-					sb.append(Paths.get(DelFile.getAbsolutePath()).getParent());
-					sb.append("\\");
-					//sb.append(i2++);
-					//sb.append("_");
-					String str = Paths.get(DelFile.getAbsolutePath()).getFileName()+"";
-					sb.append(str.replaceAll("\\d+\\_", ""));
-					
-					File destFile = new File(sb.toString()); 
-					
-					DelFile.renameTo(destFile);
-					sb.delete(0, sb.length());
-				
-				}
-				
-				break;
-			default:
-                System.out.println("ÕÛÊÌÓ ËÒÔÓÎ¸ÁÓ‚‡Ú¸ ‡„ÛÏÂÌÚ˚ txt ËÎË mp3 ËÎË del ˜ÚÓ·˚ ‚ÂÌÛÚ¸");
-			}
-			
-			} else 
-				System.out.println("ŒÚÒÛÚÒÚ‚ÛÂÚ ‚‚Â‰ÂÌÌ˚È ‡„ÛÏÂÌÚ (txt,mp3,del)");
-		}
-	}
+        if(Files.exists(Paths.get(fileDir))) {
+            System.out.println("–î–∏—Ä–µ–∫—Ç–æ—Ä–∏—è —Ç–∞–∫–∞—è –µ—Å—Ç—å " + fileDir);
+            if(args.length > 0) {
+
+                switch(args[0]) {
+
+                    case "txt":
+                        File dir = new File(fileDir);
+                        File[] txtFiles = dir.listFiles(new TxtFilenameFilter());
+                        int i = 0;
+                        for(File txtFile : txtFiles) {
+                            System.out.println(txtFile.getAbsolutePath());
+
+                            StringBuilder sb = new StringBuilder();
+                            sb.append(Paths.get(txtFile.getAbsolutePath()).getParent());
+                            sb.append("\\0");
+                            sb.append(i++);
+                            sb.append("_");
+                            sb.append(Paths.get(txtFile.getAbsolutePath()).getFileName());
+
+                            File destFile = new File(sb.toString());
+
+                            txtFile.renameTo(destFile);
+                            sb.delete(0, sb.length());
+                        }
+                        break;
+
+                    case "mp3":
+                        File dir2 = new File(fileDir);
+                        File[] mp3Files = dir2.listFiles(new Mp3FilenameFilter());
+                        int i2 =0;
+                        for(File mp3File : mp3Files) {
+                            System.out.println(mp3File.getAbsolutePath());
+                            StringBuilder sb = new StringBuilder();
+                            sb.append(Paths.get(mp3File.getAbsolutePath()).getParent());
+                            sb.append("\\0");
+                            sb.append(i2++);
+                            sb.append("_");
+                            sb.append(Paths.get(mp3File.getAbsolutePath()).getFileName());
+
+                            File destFile = new File(sb.toString());
+
+                            mp3File.renameTo(destFile);
+                            sb.delete(0, sb.length());
+
+                        }
+                        break;
+                    case "del":
+                        File dir3 = new File(fileDir);
+                        File[] DelFiles = dir3.listFiles(new DelFilenameFilter());
+                        for(File DelFile : DelFiles) {
+                            System.out.println(DelFile.getAbsolutePath());
+
+                            StringBuilder sb = new StringBuilder();
+                            sb.append(Paths.get(DelFile.getAbsolutePath()).getParent());
+                            sb.append("\\");
+                            //sb.append(i2++);
+                            //sb.append("_");
+                            String str = Paths.get(DelFile.getAbsolutePath()).getFileName()+"";
+                            sb.append(str.replaceAll("\\d+\\_", ""));
+
+                            File destFile = new File(sb.toString());
+
+                            DelFile.renameTo(destFile);
+                            sb.delete(0, sb.length());
+
+                        }
+
+                        break;
+                    default:
+                        System.out.println("–ù—É–∂–Ω–æ –∏—Å–ø–æ–ª—å–∑–æ–≤–∞—Ç—å –∞—Ä–≥—É–º–µ–Ω—Ç—ã txt –∏–ª–∏ mp3 –∏–ª–∏ del —á—Ç–æ–±—ã –≤–µ—Ä–Ω—É—Ç—å");
+                }
+
+            } else
+                System.out.println("–û—Ç—Å—É—Ç—Å—Ç–≤—É–µ—Ç –≤–≤–µ–¥–µ–Ω–Ω—ã–π –∞—Ä–≥—É–º–µ–Ω—Ç (txt,mp3,del)");
+        }
+    }
 }
-	
-

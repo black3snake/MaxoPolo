@@ -1,3 +1,4 @@
+package com.javarush.task.task02;
 import java.io.File;
 import java.io.FilenameFilter;
  
