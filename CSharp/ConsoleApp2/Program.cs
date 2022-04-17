@@ -11,7 +11,7 @@ namespace ConsoleApp2
         /*
             Программа Первая:)
          */
-        static void Main(string[] args) // Этот метод называется "Main" (Обязательно !)
+        static void Main(string[] args) // Этот метод называется "Main" (Обязательно!)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.BackgroundColor = ConsoleColor.White;
