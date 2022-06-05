@@ -1,6 +1,6 @@
 јрхив написанных программ на 3 разных €зыках
 C#, PowerShell , Java
-C# - недавно начал писать пока дл€ работы использую Windosw Forms, TPL(Task Parallel Library)
+C# - дл€ работы использую Windosw Forms, Console, TPL(Task Parallel Library)
 PowerShell - используетс€ дл€ работы все технологии кроме GUI
 Java - задачи брались на ресурсе JAVARUSH (проходил обучение 25lvl). –ешаю на IDE IntellJ IDEA.(ввиду необходимости изучени€ других €зыков 
 переключилс€ на C# и Powershell)
