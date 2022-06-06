@@ -75,7 +75,10 @@ namespace ConsoleExcel1
                 logger.Info($"Путь к каталогу: {Path}{"\n"} значение ищем: {FindString}{"\n"} значение на которое меняем: {ReplaceString}{"\n"}");
 
                 //Parallel.ForEach(people, options, person => { MyTask(person); });
-                Parallel.ForEach(listF, options, ls => { MyTask(ls); });
+                //Parallel.ForEach(listF, options, ls => { MyTask(ls); });
+
+                // Вариант 2 используя PLINQ - быстрее и экономней
+                listF.AsParallel().WithDegreeOfParallelism(options.MaxDegreeOfParallelism).ForAll(ls => { MyTask(ls);});
 
                 //ReplaceExcel(Path);
             }
