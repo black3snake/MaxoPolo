@@ -14,6 +14,7 @@ using Microsoft.Office.Interop.Excel;
 using System.Text.RegularExpressions;
 using Microsoft.Vbe.Interop;
 using System.Runtime.InteropServices;
+using Microsoft.Win32;
 
 namespace WindowsF3Links
 {
@@ -69,6 +70,34 @@ namespace WindowsF3Links
             textBox6.GotFocus += (s, a) => { if (textBox6.Text == "Empty") { textBox6.Text = ""; } };
             textBox6.LostFocus += (s, a) => { if (string.IsNullOrEmpty(textBox6.Text)) { textBox6.Text = "Empty"; } };
 
+            // Проверка реестра
+            RegistryKey keyS = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Office\16.0\Excel\Security", true);
+            if(Convert.ToInt32(keyS.GetValue("AccessVBOM")) == 0)
+            {
+                pictureBox2.BackgroundImage = Resources.Close_2_26986;
+                pictureBox2.Click += (s, a) => { 
+                    if(MessageBox.Show("Внеси изменения в реестр?", "Сообщение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        keyS.SetValue("AccessVBOM", 1);
+                        RegistryKey keySM = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Office\16.0\Excel\Security", false);
+                        if (Convert.ToInt32(keySM.GetValue("AccessVBOM")) == 1)
+                        {
+                            pictureBox2.BackgroundImage = Resources.Ok_270071;
+                        }
+                    } 
+                };
+            } else
+            {
+                pictureBox2.BackgroundImage = Resources.Ok_270071;
+            }
+          /*  pictureBox2.MouseLeave += (s, a) =>
+            {
+                RegistryKey keySM = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Office\16.0\Excel\Security", false);
+                if(Convert.ToInt32(keySM.GetValue("AccessVBOM")) == 1) {
+                    pictureBox2.BackgroundImage = Resources.Ok_270071;
+                }
+            };*/
+
 
         }
         // кнопка Clear
@@ -113,92 +142,95 @@ namespace WindowsF3Links
                 {
                     if (textBox2.Text != "Empty" && textBox3.Text != "Empty")
                     {
-                        dic.Add(ZamenaSL(textBox2.Text), ZamenaSL(textBox3.Text));
+                        dic.Add(ZamenaSL(textBox2.Text.Trim()), ZamenaSL(textBox3.Text.Trim()));
                     }
                     if (textBox5.Text != "Empty" && textBox4.Text != "Empty")
                     {
-                        dic.Add(ZamenaSL(textBox5.Text), ZamenaSL(textBox4.Text));
+                        dic.Add(ZamenaSL(textBox5.Text.Trim()), ZamenaSL(textBox4.Text.Trim()));
                     }
                     if (textBox7.Text != "Empty" && textBox6.Text != "Empty")
                     {
-                        dic.Add(ZamenaSL(textBox7.Text), ZamenaSL(textBox6.Text));
+                        dic.Add(ZamenaSL(textBox7.Text.Trim()), ZamenaSL(textBox6.Text.Trim()));
                     }
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message, "Исключение", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 // Main
-                //Объявляем переменную приложения Excel 
-                Excel.Application app = null;
-                Excel.Workbooks workbooks = null;
-                Excel.Workbook workbook = null;
-                Excel.Sheets worksheets = null;
-
-                try
+                if (checkBox1.Checked || checkBox2.Checked)
                 {
-                    app = new Excel.Application();
-                    workbooks = app.Workbooks;
-                    workbook = workbooks.Open(textBox1.Text);
-                    worksheets = workbook.Sheets;
+                    //Объявляем переменную приложения Excel 
+                    Excel.Application app = null;
+                    Excel.Workbooks workbooks = null;
+                    Excel.Workbook workbook = null;
+                    Excel.Sheets worksheets = null;
 
-                    app.AskToUpdateLinks = false;
-                    app.DisplayAlerts = false;
-
-                    // 1. Первая часть обработки xls именно в макросах
-                    if (checkBox1.Checked)
+                    try
                     {
-                        Invoke(new System.Action(() =>
-                        {
-                            textBox8.AppendText($"Начинаеи обработку Макросов в файле {textBox1.Text}" + Environment.NewLine);
-                        }));
-                        //textBox8.Text += $"Начинаеи обработку Макросов в файле {textBox1.Text}" + Environment.NewLine;
-                        WorkMacro(workbook, dic);
+                        app = new Excel.Application();
+                        workbooks = app.Workbooks;
+                        workbook = workbooks.Open(textBox1.Text);
+                        worksheets = workbook.Sheets;
 
-                        Invoke(new System.Action(() =>
-                        {
-                            textBox8.AppendText("Конец обработки Макросов" + Environment.NewLine);
-                        }));
-                    }
+                        app.AskToUpdateLinks = false;
+                        app.DisplayAlerts = false;
 
-                    // 2. Это будет вторая часть обработки в самих листах
-                    //Переберем в цикле все листы которые присутсуют в рабочей книге
-                    if (checkBox2.Checked)
-                    {
-                        Invoke(new System.Action(() =>
+                        // 1. Первая часть обработки xls именно в макросах
+                        if (checkBox1.Checked)
                         {
-                            textBox8.AppendText($"Начинаеи обработку Листов кол:{worksheets.Count} в файле {textBox1.Text}" + Environment.NewLine);
-                        }));
-                        //textBox8.Text += $"Начинаеи обработку Листов кол:{worksheets.Count} в файле {textBox1.Text}" + Environment.NewLine;
-                        for (int i = 1; i <= worksheets.Count; i++)
-                        {
-                            WorkSheetM(worksheets[i], dic);
-                            Marshal.ReleaseComObject(worksheets[i]);
+                            Invoke(new System.Action(() =>
+                            {
+                                textBox8.AppendText($"Начинаеи обработку Макросов в файле {textBox1.Text}" + Environment.NewLine);
+                            }));
+                            //textBox8.Text += $"Начинаеи обработку Макросов в файле {textBox1.Text}" + Environment.NewLine;
+                            WorkMacro(workbook, dic);
+
+                            Invoke(new System.Action(() =>
+                            {
+                                textBox8.AppendText("Конец обработки Макросов" + Environment.NewLine);
+                            }));
                         }
-                        Invoke(new System.Action(() =>
+
+                        // 2. Это будет вторая часть обработки в самих листах
+                        //Переберем в цикле все листы которые присутсуют в рабочей книге
+                        if (checkBox2.Checked)
                         {
-                            textBox8.AppendText("Конец обработки Листов" + Environment.NewLine);
-                        }));
+                            Invoke(new System.Action(() =>
+                            {
+                                textBox8.AppendText($"Начинаеи обработку Листов кол:{worksheets.Count} в файле {textBox1.Text}" + Environment.NewLine);
+                            }));
+                            //textBox8.Text += $"Начинаеи обработку Листов кол:{worksheets.Count} в файле {textBox1.Text}" + Environment.NewLine;
+                            for (int i = 1; i <= worksheets.Count; i++)
+                            {
+                                WorkSheetM(worksheets[i], dic);
+                                Marshal.ReleaseComObject(worksheets[i]);
+                            }
+                            Invoke(new System.Action(() =>
+                            {
+                                textBox8.AppendText("Конец обработки Листов" + Environment.NewLine);
+                            }));
+                        }
+
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Исключение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
 
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Исключение", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
+                        // всегда выполняемы блок
+                        workbook.Save();
+                        // Закроем Excel
+                        workbooks.Close();
+                        app.Quit();
 
-                    // всегда выполняемы блок
-                    workbook.Save();
-                    // Закроем Excel
-                    workbooks.Close();
-                    app.Quit();
+                        Marshal.ReleaseComObject(worksheets);
+                        Marshal.ReleaseComObject(workbook);
+                        Marshal.ReleaseComObject(workbooks);
+                        Marshal.ReleaseComObject(app);
+                        GC.Collect();
 
-                    Marshal.ReleaseComObject(worksheets);
-                    Marshal.ReleaseComObject(workbook);
-                    Marshal.ReleaseComObject(workbooks);
-                    Marshal.ReleaseComObject(app);
-                    GC.Collect();
-
+                    }
                 }
 
                 // 3. Третья часть обработки - внешние ссылки
@@ -393,6 +425,7 @@ namespace WindowsF3Links
                                 {
                                     xlWB.ChangeLink(item.ToString(), newPath, XlLinkType.xlLinkTypeExcelLinks);
                                     i++;
+                                    xlWB.BreakLink((string)item, XlLinkType.xlLinkTypeExcelLinks);
                                 }
                                 catch (COMException ex)
                                 {
@@ -415,6 +448,8 @@ namespace WindowsF3Links
 
                     }
                 }
+                // Обновляем и разрываем лишние связи
+                //WorkbookUpdateLink(xlWB,dicM);
 
                 //Console.Clear();
                 //Console.WriteLine("Сохраняем изменения {0}", path);
@@ -450,6 +485,7 @@ namespace WindowsF3Links
                 xlApp.DisplayAlerts = true;
                 xlApp.Workbooks.Close();
                 xlApp.Quit();
+                Marshal.ReleaseComObject(xlWB);
                 Marshal.ReleaseComObject(xlApp);
 
                 xlApp = null;
@@ -468,5 +504,25 @@ namespace WindowsF3Links
 
         }
         
+        private void WorkbookUpdateLink(Workbook xlWB, Dictionary<string, string> dicMA)
+        {
+            Array links = (Array)xlWB.LinkSources(XlLink.xlExcelLinks);
+            if (links != null)
+            {
+                foreach(var link in links)
+                {
+                    foreach (var dMA in dicMA)
+                    {
+                        if(Regex.IsMatch(link.ToString().Replace("\\", "/"), dMA.Key, RegexOptions.IgnoreCase))
+                        {
+                            xlWB.UpdateLink((string)link, XlLinkType.xlLinkTypeExcelLinks);
+                        } else
+                        {
+                            xlWB.BreakLink((string)link, XlLinkType.xlLinkTypeExcelLinks);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
