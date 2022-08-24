@@ -524,5 +524,25 @@ namespace WindowsF3Links
                 }
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if(openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                textBox1.Text = openFileDialog1.FileName;
+
+                if (File.Exists(textBox1.Text) && Regex.IsMatch(textBox1.Text, @"^.*.xls.?$"))
+                {
+                    pictureBox1.BackgroundImage = Resources.Ok_270071;
+                }
+                else
+                {
+                    pictureBox1.BackgroundImage = Resources.Close_2_26986;
+                }
+            }
+
+        }
+
+        
     }
 }
