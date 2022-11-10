@@ -1,6 +1,7 @@
 јрхив написанных программ на 3 разных €зыках
 C#, PowerShell , Java
-C# - дл€ работы использую Windosw Forms, Console, PLINQ, TPL(Task Parallel Library)
+C# - дл€ работы использую Windosw Forms, Console, PLINQ, TPL(Task Parallel Library), Entity Framework Code First (Fluent API), REST запросы к Web API,
+серилизаци€ и десерилизаци€ JSON.
 PowerShell - используетс€ дл€ работы все технологии кроме GUI
 Java - задачи брались на ресурсе JAVARUSH (проходил обучение 25lvl). –ешаю на IDE IntellJ IDEA.(ввиду необходимости изучени€ других €зыков переключилс€ на C# и Powershell)
 
