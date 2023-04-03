@@ -15,7 +15,7 @@ $Domen = "ie"
 $Account = $Domen+"\"+$user
 #
 # инициализация путей профиля
-$destinationpath = "\\PSF-MS03-IDC.ie.corp\CTXProfiles\"
+$destinationpath = "\\server\CTXProfiles\"
 $SourceDir = $destinationpath + $User + "."+ $Domen + ".v2"  
 $Dir_Empty = $SourceDir + ".empty"
 #
@@ -41,7 +41,7 @@ function RoBo($D_empty) {
 #
 #функция копирования директории, сохраняя все права и атрибуты
 Function RoCoDir($S_Dir) {                               
-    $D_copy = $S_Dir + ".ie.v2.copy"
+    $D_copy = $S_Dir + ".iie.v2.copy"
     #Define arguments for robocopy
     $array = @("/E","/COPYALL","/SECFIX","/R:0","/W:0")
     #Create an arraylist

@@ -8,8 +8,8 @@ cls
 if ( (Get-PSSnapin -Name Microsoft.Exchange.* -ErrorAction SilentlyContinue) -eq $null ) {Add-PsSnapin Microsoft.Exchange.*}
 
 
-$mailB = "srv-junk"
-$seach = 'Mikhail.Likhoman@beluga-projects.com'
+$mailB = "srv-jxxx"
+$seach = 'man@beluga-projects.com'
 $targetFL = "RE_mail"
 
 Get-Mailbox -Identity $mailB | Search-Mailbox -SearchQuery $seach -EstimateResultOnly

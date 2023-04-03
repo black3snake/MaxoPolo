@@ -31,7 +31,7 @@ Function Pause2 ($Msg = "Press any key to continue . . . ") {
 
 $HKLM_Environment = "Registry::HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
 
-New-ItemProperty -Path $HKLM_Environment -Name "LSFORCEHOST" -Value "172.19.25.11"
+New-ItemProperty -Path $HKLM_Environment -Name "LSFORCEHOST" -Value "172.109.25.111"
 Get-ItemProperty -Path $HKLM_Environment
 
 Get-Item -Path Env:* | Select Name, Value | Ft Name,Value

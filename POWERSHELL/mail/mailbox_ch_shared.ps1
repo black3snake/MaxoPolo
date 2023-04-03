@@ -7,4 +7,4 @@ cls
 if ( (Get-PSSnapin -Name Microsoft.Exchange.* -ErrorAction SilentlyContinue) -eq $null ) {Add-PsSnapin Microsoft.Exchange.*}
 
 
-Get-Mailbox office_ru@kvsu.ru | Set-Mailbox -Type Shared
+Get-Mailbox office_ru@xxx.ru | Set-Mailbox -Type Shared

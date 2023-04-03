@@ -9,7 +9,7 @@ $Data30 = (Get-date).AddDays(-30)
 [string]$spi_str = $PathToScript+'spisok_serverov_IE.txt'
 [string]$ServDCOM_str = $PathToScript+'ServDCOM.txt'
 [string]$ServDCOM_nowork_str = $PathToScript+'ServDCOM_nowork.txt'
-$cred = Get-Credential -Credential "IE\srv-sch"
+$cred = Get-Credential -Credential "IIE\srv-xxx"
 
 #if(Test-Path $sched_library) {
 #    Import-Module -Name $sched_library

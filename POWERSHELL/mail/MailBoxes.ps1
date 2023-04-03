@@ -7,7 +7,7 @@ Clear-Host
 #Add-PSSnapin Microsoft.Exchange.*  # Имортируем модуль EX
 if ( (Get-PSSnapin -Name Microsoft.Exchange.* -ErrorAction SilentlyContinue) -eq $null ) {Add-PsSnapin Microsoft.Exchange.*}
 #
-$SB = "OU=Организации,DC=ie,DC=corp"
+$SB = "OU=Организации,DC=iie"
 $100_Days = (Get-Date).adddays(-100)
 #Найдем почтовые базы данных
 [array]$MailBoxDatabases=@()
@@ -58,7 +58,7 @@ for($i=0; $i -le $MailBoxes.Count-1; $i++) {
 }
 Write-Host "Количество конечных УЗ:" $spisok.Count
 
-$spisok | Out-File "C:\Users\adm_pmv\Documents\1.txt"
+$spisok | Out-File "C:\Users\mv\Documents\1.txt"
 
 
 #foreach($DUser in $DUsers.SamAccountName){
